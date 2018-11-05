@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Authors>Comment Everything</Authors>
+    <Company>Comment Everything</Company>
+    <Product>CommentEverythingAPIConnection .NET Core Library</Product>
+    <Description>Library of classes and interfaces to easily call web APIs for data.</Description>
+    <Copyright>2018</Copyright>
+    <RepositoryUrl>https://github.com/MasterOfSomeTrades/CommentEverythingAPIConnectionNETCore.git</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+    <PackageTags>Library NETCore API Web Connection</PackageTags>
+    <PackageReleaseNotes>Initial files including IAPIConnector, GETConnector and POSTConnector interfaces. Connectors return IData objects, which can be of type IDataDescription and/or IDataMeasurement.</PackageReleaseNotes>
+  </PropertyGroup>
+
+</Project>
