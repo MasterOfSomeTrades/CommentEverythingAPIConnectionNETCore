@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CommentEverythingAPIConnectionNETCore.Connectors
 {
@@ -22,8 +23,8 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
             }
         }
 
-        public virtual IData DoUpdate(string requestData = "", string[] requestDataArray = null) {
-            IData theData = ConvertJSONToDataObject(GetJSONResponse(FormatRequest(requestData, requestDataArray)));
+        public virtual async Task<IData> DoUpdate(string requestData = "", string[] requestDataArray = null) {
+            IData theData = ConvertJSONToDataObject(await GetJSONResponse(FormatRequest(requestData, requestDataArray)));
             ((IDataDescription) theData).Topic = requestData;
             return theData;
         }
@@ -48,7 +49,7 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
         /// </summary>
         /// <param name="requestData"></param>
         /// <returns></returns>
-        public virtual List<string> GetJSONResponse(string requestData) {
+        public virtual async Task<List<string>> GetJSONResponse(string requestData) {
             List<string> jsonResults = new List<string>();
             string json = "";
 
@@ -59,7 +60,7 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
                             web.Headers.Add(sArray[0], sArray[1]);
                         }
 
-                        json = web.UploadString(urlStr, "POST", requestData);
+                        json = await web.UploadStringTaskAsync(urlStr, "POST", requestData);
                         jsonResults.Add(json);
                     }
                 }

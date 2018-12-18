@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CommentEverythingAPIConnectionNETCore.Connectors
 {
@@ -11,7 +12,7 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
         string Name { get; }
         int WaitTime { get; }
 
-        IData DoUpdate(string requestData = "", string[] requestDataArray = null);
+        Task<IData> DoUpdate(string requestData = "", string[] requestDataArray = null);
 
         /// <summary>
         /// Implemented method should deserialize the JSON to its respective object (e.g. Stock, Option, etc.).
@@ -26,6 +27,6 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
         /// </summary>
         /// <param name="requestData"></param>
         /// <returns></returns>
-        List<string> GetJSONResponse(string requestData);
+        Task<List<string>> GetJSONResponse(string requestData);
     }
 }

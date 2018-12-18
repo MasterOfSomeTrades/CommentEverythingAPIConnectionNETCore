@@ -10,7 +10,8 @@
     <RepositoryUrl>https://github.com/MasterOfSomeTrades/CommentEverythingAPIConnectionNETCore.git</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>Library NETCore API Web Connection</PackageTags>
-    <PackageReleaseNotes>Initial files including IAPIConnector, GETConnector and POSTConnector interfaces. Connectors return IData objects, which can be of type IDataDescription and/or IDataMeasurement.</PackageReleaseNotes>
+    <PackageReleaseNotes>Asynchronous implementation</PackageReleaseNotes>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
 </Project>

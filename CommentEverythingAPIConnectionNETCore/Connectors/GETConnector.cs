@@ -23,10 +23,10 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
             }
         }
 
-        public virtual IData DoUpdate(string requestData, string[] requestDataArray = null) {
+        public virtual async Task<IData> DoUpdate(string requestData, string[] requestDataArray = null) {
             Task.Delay(WaitTime).GetAwaiter().GetResult();
 
-            IData theData = ConvertJSONToDataObject(GetJSONResponse(requestData));
+            IData theData = ConvertJSONToDataObject(await GetJSONResponse(requestData));
             ((IDataDescription) theData).Topic = requestData;
             return theData;
         }
@@ -44,7 +44,7 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
         /// </summary>
         /// <param name="requestData"></param>
         /// <returns></returns>
-        public virtual List<string> GetJSONResponse(string requestData) {
+        public virtual async Task<List<string>> GetJSONResponse(string requestData) {
             List<string> jsonResults = new List<string>();
             string json = "";
             StringBuilder sb = new StringBuilder();
@@ -59,7 +59,7 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
                             web.Headers.Add(sArray[0], sArray[1]);
                         }
 
-                        json = web.DownloadString(sb.ToString());
+                        json = await web.DownloadStringTaskAsync(sb.ToString());
                         jsonResults.Add(json);
                     }
                 }
