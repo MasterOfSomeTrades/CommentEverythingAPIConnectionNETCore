@@ -24,7 +24,7 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
         }
 
         public virtual async Task<IData> DoUpdate(string requestData, string[] requestDataArray = null) {
-            Task.Delay(WaitTime).GetAwaiter().GetResult();
+            await Task.Delay(WaitTime);
 
             IData theData = ConvertJSONToDataObject(await GetJSONResponse(requestData));
             ((IDataDescription) theData).Topic = requestData;
