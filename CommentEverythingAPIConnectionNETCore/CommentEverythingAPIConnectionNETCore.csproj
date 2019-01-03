@@ -11,9 +11,9 @@
     <RepositoryType>Github</RepositoryType>
     <PackageTags>Library NETCore API Web Connection</PackageTags>
     <PackageReleaseNotes>Retry 10 times on data retrieval error.</PackageReleaseNotes>
-    <Version>3.1.0</Version>
-    <AssemblyVersion>3.1.0.0</AssemblyVersion>
-    <FileVersion>3.1.0.0</FileVersion>
+    <Version>3.2.0</Version>
+    <AssemblyVersion>3.2.0.0</AssemblyVersion>
+    <FileVersion>3.2.0.0</FileVersion>
   </PropertyGroup>
 
 </Project>

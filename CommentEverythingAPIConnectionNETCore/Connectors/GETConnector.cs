@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CommentEverythingAPIConnectionNETCore.Connectors
@@ -103,7 +104,11 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
                             web.Headers.Add(sArray[0], sArray[1]);
                         }
 
+                        CancellationTokenSource cts = new CancellationTokenSource();
+                        cts.CancelAfter(3000);
+                        cts.Token.Register(web.CancelAsync);
                         json = await web.DownloadStringTaskAsync(sb.ToString());
+                        cts.Token.ThrowIfCancellationRequested();
                         jsonResults.Add(json);
                     }
                 }
