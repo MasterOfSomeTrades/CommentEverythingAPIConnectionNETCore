@@ -22,11 +22,43 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
                 return _waitTime;
             }
         }
+        protected abstract int _concurrentCalls { get; }
+        public int ConcurrentCalls {
+            get {
+                return _concurrentCalls;
+            }
+        }
+
 
         public virtual async Task<IData> DoUpdate(string requestData = "", string[] requestDataArray = null) {
             IData theData = ConvertJSONToDataObject(await GetJSONResponse(FormatRequest(requestData, requestDataArray)));
             ((IDataDescription) theData).Topic = requestData;
             return theData;
+        }
+
+        protected virtual async Task<IData> DoUpdateNoWait(string requestData, string[] requestDataArray = null) {
+            IData theData = ConvertJSONToDataObject(await GetJSONResponse(requestData));
+            ((IDataDescription) theData).Topic = requestData;
+            return theData;
+        }
+
+        public virtual async Task<Dictionary<string, IData>> DoUpdate(IList<string> requestData) {
+            Dictionary<string, IData> result = new Dictionary<string, IData>();
+            List<Task<IData>> tasks = new List<Task<IData>>();
+
+            for (int i = 0; i < requestData.Count; i++) {
+                tasks.Add(DoUpdateNoWait(requestData[i]));
+                if (((i + 1) % _concurrentCalls) == 0 || i == requestData.Count - 1) {
+                    IData[] tempData = await Task.WhenAll(tasks.ToArray());
+                    foreach (IData dataResult in tempData) {
+                        result.TryAdd(((IDataDescription) dataResult).Topic, dataResult);
+                    }
+                    tasks = new List<Task<IData>>();
+                    await Task.Delay(_waitTime);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
