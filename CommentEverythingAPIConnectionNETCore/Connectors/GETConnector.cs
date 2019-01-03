@@ -38,7 +38,20 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
         }
 
         protected virtual async Task<IData> DoUpdateNoWait(string requestData, string[] requestDataArray = null) {
-            IData theData = ConvertJSONToDataObject(await GetJSONResponse(requestData));
+            IData theData = null;
+            int retry = 0;
+            while (retry < 10) {
+                try {
+                    theData = ConvertJSONToDataObject(await GetJSONResponse(requestData));
+                    retry = 100;
+                } catch (Exception ex) {
+                    retry++;
+                    if (retry == 10) {
+                        throw new ApplicationException("ERROR - Maximum retries of " + retry.ToString() + " exceeded - " + ex.Message + ex.StackTrace);
+                    }
+                    await Task.Delay(_waitTime);
+                }
+            }
             ((IDataDescription) theData).Topic = requestData;
             return theData;
         }
