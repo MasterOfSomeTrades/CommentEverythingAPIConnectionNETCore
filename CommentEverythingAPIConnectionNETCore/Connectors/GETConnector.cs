@@ -123,7 +123,7 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
                         }
 
                         CancellationTokenSource cts = new CancellationTokenSource();
-                        cts.CancelAfter(3000);
+                        cts.CancelAfter(_timeout);
                         cts.Token.Register(web.CancelAsync);
                         json = await web.DownloadStringTaskAsync(sb.ToString());
                         cts.Token.ThrowIfCancellationRequested();
