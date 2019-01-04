@@ -17,16 +17,34 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
                 return _name;
             }
         }
+
+        /// <summary>
+        /// Wait time in milliseconds between batches of calls
+        /// </summary>
         protected abstract int _waitTime { get; }
         public int WaitTime {
             get {
                 return _waitTime;
             }
         }
+
+        /// <summary>
+        /// Maximum number of simultaneous external API calls within a batch of calls
+        /// </summary>
         protected abstract int _concurrentCalls { get; }
         public int ConcurrentCalls {
             get {
                 return _concurrentCalls;
+            }
+        }
+
+        /// <summary>
+        /// Timeout in milliseconds for external API calls before giving up and retrying
+        /// </summary>
+        protected abstract int _timeout { get; }
+        public int Timeout {
+            get {
+                return _timeout;
             }
         }
 
