@@ -63,7 +63,12 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
                 tasks.Add(DoUpdateNoWait(requestData[i]));
                 if (((i + 1) % _concurrentCalls) == 0 || i == requestData.Count - 1) {
                     IData[] tempData = await Task.WhenAll(tasks.ToArray());
+                    int index = -1;
                     foreach (IData dataResult in tempData) {
+                        index++;
+                        if (((IDataDescription) dataResult).Topic is null) {
+                            ((IDataDescription) dataResult).Topic = requestData[index];
+                        }
                         result.TryAdd(((IDataDescription) dataResult).Topic, dataResult);
                     }
                     tasks = new List<Task<IData>>();
