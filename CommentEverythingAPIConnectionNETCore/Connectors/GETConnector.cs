@@ -56,17 +56,23 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
             return theData;
         }
 
-        protected virtual async Task<IData> DoUpdateNoWait(string requestData, string[] requestDataArray = null) {
+        protected virtual async Task<IData> DoUpdateNoWait(string requestData, string[] requestDataArray = null, bool partialData = false) {
             IData theData = null;
             int retry = 0;
-            while (retry < 10) {
+            while (retry < 3) {
                 try {
                     theData = ConvertJSONToDataObject(await GetJSONResponse(requestData));
                     retry = 100;
                 } catch (Exception ex) {
                     retry++;
-                    if (retry == 10) {
-                        throw new ApplicationException("ERROR - Maximum retries of " + retry.ToString() + " exceeded - " + ex.Message + ex.StackTrace);
+                    if (retry == 3) {
+                        if (partialData) {
+                            theData = new EmptyData();
+                            ((EmptyData) theData).Topic = requestData;
+                            ((EmptyData) theData).DescriptiveContent = requestData;
+                        } else {
+                            throw new ApplicationException("ERROR - Maximum retries of " + retry.ToString() + " exceeded - " + ex.Message + ex.StackTrace);
+                        }
                     }
                     await Task.Delay(_waitTime);
                 }
@@ -75,12 +81,12 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
             return theData;
         }
 
-        public virtual async Task<Dictionary<string, IData>> DoUpdate(IList<string> requestData) {
+        public virtual async Task<Dictionary<string, IData>> DoUpdate(IList<string> requestData, bool partialData = false) {
             Dictionary<string, IData> result = new Dictionary<string, IData>();
             List<Task<IData>> tasks = new List<Task<IData>>();
 
             for (int i=0; i<requestData.Count; i++) {
-                tasks.Add(DoUpdateNoWait(requestData[i]));
+                tasks.Add(DoUpdateNoWait(requestData[i], null, partialData));
                 if (((i + 1) % _concurrentCalls) == 0 || i == requestData.Count - 1) {
                     IData[] tempData = await Task.WhenAll(tasks.ToArray());
                     int index = -1;
@@ -89,7 +95,9 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
                         if (((IDataDescription) dataResult).Topic is null) {
                             ((IDataDescription) dataResult).Topic = requestData[index];
                         }
-                        result.TryAdd(((IDataDescription) dataResult).Topic, dataResult);
+                        if (!(dataResult is EmptyData)) {
+                            result.TryAdd(((IDataDescription) dataResult).Topic, dataResult);
+                        }
                     }
                     tasks = new List<Task<IData>>();
                     await Task.Delay(_waitTime);

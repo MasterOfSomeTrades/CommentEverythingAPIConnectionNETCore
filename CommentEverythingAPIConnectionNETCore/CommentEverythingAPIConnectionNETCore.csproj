@@ -6,14 +6,14 @@
     <Company>Comment Everything</Company>
     <Product>CommentEverythingAPIConnection .NET Core Library</Product>
     <Description>Library of classes and interfaces to easily call web APIs for data.</Description>
-    <Copyright>2018</Copyright>
+    <Copyright>2020</Copyright>
     <RepositoryUrl>https://github.com/MasterOfSomeTrades/CommentEverythingAPIConnectionNETCore.git</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>Library NETCore API Web Connection</PackageTags>
-    <PackageReleaseNotes>Set Topic if null.</PackageReleaseNotes>
-    <Version>3.3.0</Version>
-    <AssemblyVersion>3.3.0.0</AssemblyVersion>
-    <FileVersion>3.3.0.0</FileVersion>
+    <PackageReleaseNotes>3 retries on API connection failure. Allow partial data.</PackageReleaseNotes>
+    <Version>3.4.1</Version>
+    <AssemblyVersion>3.4.1.0</AssemblyVersion>
+    <FileVersion>3.4.1.0</FileVersion>
   </PropertyGroup>
 
 </Project>

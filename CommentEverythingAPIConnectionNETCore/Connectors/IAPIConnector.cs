@@ -14,7 +14,7 @@ namespace CommentEverythingAPIConnectionNETCore.Connectors
 
         Task<IData> DoUpdate(string requestData = "", string[] requestDataArray = null);
 
-        Task<Dictionary<string, IData>> DoUpdate(IList<string> requestData);
+        Task<Dictionary<string, IData>> DoUpdate(IList<string> requestData, bool partialData = false);
 
         /// <summary>
         /// Implemented method should deserialize the JSON to its respective object (e.g. Stock, Option, etc.).
