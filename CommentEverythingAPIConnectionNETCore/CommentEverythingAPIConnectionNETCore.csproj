@@ -1,19 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>Comment Everything</Authors>
     <Company>Comment Everything</Company>
     <Product>CommentEverythingAPIConnection .NET Core Library</Product>
     <Description>Library of classes and interfaces to easily call web APIs for data.</Description>
-    <Copyright>2020</Copyright>
+    <Copyright>2021</Copyright>
     <RepositoryUrl>https://github.com/MasterOfSomeTrades/CommentEverythingAPIConnectionNETCore.git</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <PackageTags>Library NETCore API Web Connection</PackageTags>
-    <PackageReleaseNotes>3 retries on API connection failure. Allow partial data.</PackageReleaseNotes>
-    <Version>3.4.1</Version>
-    <AssemblyVersion>3.4.1.0</AssemblyVersion>
-    <FileVersion>3.4.1.0</FileVersion>
+    <PackageReleaseNotes>Upgrade to .NET Core 3.1</PackageReleaseNotes>
+    <Version>4.0.0</Version>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <FileVersion>4.0.0.0</FileVersion>
   </PropertyGroup>
 
 </Project>
